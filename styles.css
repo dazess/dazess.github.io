@@ -76,4 +76,12 @@ dialog{background:var(--paper);color:var(--ink);padding:28px;border:0;border-rad
 .theme-toggle{width:44px;min-width:44px;height:44px;padding:0}
 .profile-intro{padding-bottom:58px}.footer-contact{padding-block:28px 30px;border-top:1px solid var(--line)}.footer-contact h2{font-size:22px;font-weight:600;line-height:1.4;letter-spacing:-.02em;margin-bottom:12px;color:var(--ink)}.footer-contact .contact-links{display:flex;flex-direction:row;align-items:center;justify-content:flex-start;flex-wrap:nowrap;gap:24px;margin:0}.footer-contact .contact-links>a{font-size:14px;min-height:38px;display:inline-flex;align-items:center;padding:0;border:0;color:var(--muted);text-decoration:none}.footer-contact .contact-links a:hover{color:var(--ink);text-decoration:underline}.footer-contact .contact-links .icon{width:14px;height:14px}.site-footer{background:var(--paper);color:var(--muted)}[data-theme=dark] .site-footer{background:var(--paper)}.site-footer .footer-bottom{border-color:var(--line);color:var(--muted);padding-block:24px}
 @media(max-width:600px){.profile-intro{padding-bottom:40px}.footer-contact .contact-links>a{min-height:40px}.site-footer .footer-bottom{padding-block:20px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.asterisk{transform:rotate(10deg)}}
+/* A shared, decorative colour field gently shifts with the reader's scroll. */
+:root{--ambient-violet:#e2d7f2;--ambient-peach:#f9e3da;--ambient-mint:#e3edda}
+[data-theme=dark]{--ambient-violet:#342541;--ambient-peach:#36242c;--ambient-mint:#24352d}
+body{isolation:isolate}.ambient-background{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.ambient-background::before{content:'';position:absolute;inset:-16%;opacity:.8;background:radial-gradient(ellipse at 12% 18%,var(--ambient-violet) 0%,transparent 54%),radial-gradient(ellipse at 85% 35%,var(--ambient-peach) 0%,transparent 52%),radial-gradient(ellipse at 45% 90%,var(--ambient-mint) 0%,transparent 58%);transform:translate3d(0,0,0)}
+@keyframes ambient-drift{from{transform:translate3d(-4%,-3%,0) rotate(-3deg) scale(1.02)}to{transform:translate3d(4%,3%,0) rotate(3deg) scale(1.06)}}
+@supports(animation-timeline:scroll(root block)){.ambient-background::before{animation:ambient-drift 1s linear both;animation-timeline:scroll(root block)}}
+.site-footer,[data-theme=dark] .site-footer{background:transparent}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}.asterisk{transform:rotate(10deg)}.ambient-background::before{transform:none}}
